@@ -35,7 +35,7 @@
 function get_xserver ()
 {
     case $TERM in
-        xterm )
+        xterm* )
             XSERVER=$(who am i | awk '{print $NF}' | tr -d ')''(' )
             # Ane-Pieter Wieringa suggests the following alternative:
             #  I_AM=$(who am i)
@@ -265,7 +265,7 @@ case ${TERM} in
         # Prompt (with 'job' info):
         PS1=${PS1}"\[\$(job_color)\]>\[${NC}\] "
         # Set title of current xterm:
-        #PS1=${PS1}"\[\e]0;[\u@\h] \w\a\]"
+        PS1=${PS1}"\[\e]0;[\u@\h] \w\a\]"
         ;;
     *)
         PS1="(\A \u@\h \W) > " # --> PS1="(\A \u@\h \w) > "
