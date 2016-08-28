@@ -6,7 +6,9 @@
 ## with a nice output
 ##
 ## INSTALL NOTES:
-## Copy it in /usr/bin/ or your /home/billy/.bin
+## Copy it in /usr/local/bin/
+## or your /home/billy/.local/bin/
+## (check whith 'echo $PATH' where to put it)
 ##
 ##################################################
 dir=${1:-.}
