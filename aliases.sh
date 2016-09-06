@@ -215,7 +215,10 @@ function maketar() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
 function makezip() { zip -r "${1%%/}.zip" "$1" ; }
 
 # Make your directories and files access rights sane.
-function sanitize() { chmod -R u=rwX,g=rX,o= "$@" ;}
+function sanitize() {
+  find ${@-.} -type f -exec chmod 640 '{}' \;
+  chmod -R u=rwX,g=rX,o= "$@" ;
+}
 
 #-------------------------------------------------------------
 # Process/system related functions:
