@@ -57,12 +57,12 @@ alias tree='tree -Csuh'    #  Nice alternative to 'recursive ls' ...
 
 alias more='less'
 export PAGER=less
-export LESSCHARSET='latin1'
+export LESSCHARSET='utf-8'
 export LESSOPEN='|/usr/bin/lesspipe.sh %s 2>&-'
                 # Use this if lesspipe.sh exists
 # -N is for line number, use -n if you have problems
 # -z-4 says windows minus 4
-export LESS='-i -N -w  -z-4 -g -e -M -X -F -R -P%t?f%f \
+export LESS='-i -n -w -z-4 -g -e -M -X -F -R -P%t?f%f \
 :stdin .?pb%pb\%:?lbLine %lb:?bbByte %bb:-...'
 
 # LESS man page colors (makes Man pages more readable)
