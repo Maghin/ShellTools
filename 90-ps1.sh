@@ -251,6 +251,11 @@ function job_color()
     fi
 }
 
+# Tell the git branch name
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
+}
+
 # Now we construct the prompt.
 PROMPT_COMMAND="history -a"
 case ${TERM} in
@@ -262,6 +267,8 @@ case ${TERM} in
         PS1=${PS1}"\[${SU}\]\u\[${NC}\]@\[${CNX}\]\h\[${NC}\] "
         # PWD (with 'disk space' info):
         PS1=${PS1}"\[\$(disk_color)\]\W]\[${NC}\] "
+        # Add git branch info
+        PS1=${PS1}"\[${Yellow}\]\$(parse_git_branch)\[${NC}\]"
         # Prompt (with 'job' info):
         PS1=${PS1}"\[\$(job_color)\]>\[${NC}\] "
         # Set title of current xterm:
