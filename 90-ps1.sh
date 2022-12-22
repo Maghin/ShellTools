@@ -174,7 +174,16 @@ date
 
 
 # Test connection type:
-if [ -n "${SSH_CONNECTION}" ]; then
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  SESSION_TYPE=remote/ssh
+# many other tests omitted
+else
+  case $(ps -o comm= -p "$PPID") in
+    sshd|*/sshd) SESSION_TYPE=remote/ssh;;
+  esac
+fi
+
+if [ -n "${SESSION_TYPE}" ]; then
     CNX=${Green}        # Connected on remote machine, via ssh (good).
 elif [[ "${DISPLAY%%:0*}" != "" ]]; then
     CNX=${ALERT}        # Connected on remote machine, not via ssh (bad).
