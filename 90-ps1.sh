@@ -173,14 +173,32 @@ date
 #    so it's available to all shells (using 'history -a').
 
 
+function top_level_parent_pid {
+    # Look up the parent of the given PID.
+    pid=${1:-$$}
+    stat=($(</proc/${pid}/stat))
+    ppid=${stat[3]}
+
+    # /sbin/init always has a PID of 1, so if you reach that, the current PID is
+    # the top-level parent. Otherwise, keep looking.
+    if [[ ${ppid} -eq 1 ]] ; then
+        ps -o comm= -p ${pid}
+    else
+        top_level_parent_pid ${ppid}
+    fi
+}
+
 # Test connection type:
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     CNX=${Green}        # Connected on remote machine, via ssh (good).
-#elif [[ "${DISPLAY%%:0*}" != "" ]]; then
-#    CNX=${ALERT}        # Connected on remote machine, not via ssh (bad).
+elif [[ "$(top_level_parent_pid $PPID)" == "sshd" ]]; then
+    CNX=${Green}        # Connected on remote machine, via ssh (good).
+elif [[ "${DISPLAY%%:0*}" != "" ]]; then
+    CNX=${ALERT}        # Connected on remote machine, not via ssh (bad).
 else
     CNX=${BCyan}        # Connected on local machine.
 fi
+
 
 # Test user type:
 if [[ ${USER} == "root" ]]; then
