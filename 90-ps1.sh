@@ -142,7 +142,7 @@ date
 #       http://tldp.org/HOWTO/Bash-Prompt-HOWTO
 #       https://github.com/nojhan/liquidprompt
 #-------------------------------------------------------------
-# Current Format: [TIME USER@HOST PWD] >
+# Current Format: [TIME USER@HOST PWD] (GIT) >
 # TIME:
 #    Green     == machine load is low
 #    Orange    == machine load is medium
@@ -162,6 +162,8 @@ date
 #    ALERT     == less than 5% free disk space
 #    Red       == current user does not have write privileges
 #    Cyan      == current filesystem is size zero (like /proc)
+# GIT:
+#    Yellow    == current git branch if in a git repository
 # >:
 #    White     == no background or suspended jobs in this shell
 #    Cyan      == at least one background job in this shell
